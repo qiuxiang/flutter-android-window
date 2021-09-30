@@ -1,6 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="qiuxiang.android_window_example">
-   <application
+    <application
+        android:name=".MainApplication"
         android:label="android_window_example"
         android:icon="@mipmap/ic_launcher">
         <activity

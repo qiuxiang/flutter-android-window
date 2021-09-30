@@ -1,6 +1,5 @@
 package qiuxiang.android_window_example
 
-import io.flutter.embedding.android.FlutterActivity
+import qiuxiang.android_window.AndroidWindowActivity
 
-class MainActivity: FlutterActivity() {
-}
+class MainActivity : AndroidWindowActivity()

@@ -1,13 +1,7 @@
+import 'pigeon.g.dart';
 
-import 'dart:async';
+export 'pigeon.g.dart' show FloatingHandler, MainHandler;
 
-import 'package:flutter/services.dart';
+final mainApi = MainApi();
 
-class AndroidWindow {
-  static const MethodChannel _channel = MethodChannel('android_window');
-
-  static Future<String?> get platformVersion async {
-    final String? version = await _channel.invokeMethod('getPlatformVersion');
-    return version;
-  }
-}
+final floatingApi = FloatingApi();

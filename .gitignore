@@ -8,5 +8,7 @@ build/
 
 .idea/
 *.iml
+*.g.dart
 .metadata
 pubspec.lock
+Pigeon.java

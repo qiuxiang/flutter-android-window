@@ -9,8 +9,8 @@ import android.provider.Settings
 class MainApi(private val activity: Activity) : Pigeon.MainApi {
   private var onActivityResultCallback: (() -> Unit)? = null
 
-  override fun openFloatingWindow(width: Long?, height: Long?, x: Long?, y: Long?) {
-    val intent = Intent(activity, FloatingService::class.java)
+  override fun openAndroidWindow(width: Long?, height: Long?, x: Long?, y: Long?) {
+    val intent = Intent(activity, WindowService::class.java)
     intent.putExtra("width", width?.toInt())
     intent.putExtra("height", height?.toInt())
     intent.putExtra("x", x?.toInt())
@@ -26,8 +26,8 @@ class MainApi(private val activity: Activity) : Pigeon.MainApi {
     }
   }
 
-  override fun closeFloatingWindow() {
-    activity.stopService(Intent(activity, FloatingService::class.java))
+  override fun closeAndroidWindow() {
+    activity.stopService(Intent(activity, WindowService::class.java))
   }
 
   override fun canDrawOverlays(result: Pigeon.Result<Boolean>) {
@@ -39,8 +39,8 @@ class MainApi(private val activity: Activity) : Pigeon.MainApi {
   }
 
   override fun send(name: String?, data: MutableMap<Any, Any>?, result: Pigeon.Result<Void>?) {
-    (activity.application as? AndroidWindowApplication)?.floatingEngine?.dartExecutor?.binaryMessenger?.let {
-      Pigeon.FloatingHandler(it).handler(name, data) { result?.success(null) }
+    (activity.application as? AndroidWindowApplication)?.engine?.dartExecutor?.binaryMessenger?.let {
+      Pigeon.AndroidWindowHandler(it).handler(name, data) { result?.success(null) }
     }
   }
 

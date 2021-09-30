@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'app.dart';
-import 'floating_app.dart';
+import 'android_window.dart';
 
 void main() {
   runApp(const App());
@@ -9,5 +9,5 @@ void main() {
 
 @pragma('vm:entry-point')
 void floating() {
-  runApp(const FloatingApp());
+  runApp(const AndroidWindowApp());
 }

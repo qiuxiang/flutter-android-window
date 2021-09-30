@@ -4,7 +4,7 @@ import io.flutter.app.FlutterApplication
 import io.flutter.embedding.engine.FlutterEngine
 
 open class AndroidWindowApplication : FlutterApplication() {
-  var floatingEngine: FlutterEngine? = null
+  var engine: FlutterEngine? = null
   var mainApi: MainApi? = null
 }
 

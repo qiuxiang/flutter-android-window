@@ -33,11 +33,11 @@ class HomePage extends StatelessWidget {
             child: const Text('Request overlay display permission'),
           ),
           ElevatedButton(
-            onPressed: () => mainApi.openFloatingWindow(400, 600, 200, 200),
+            onPressed: () => mainApi.openAndroidWindow(400, 600, 200, 200),
             child: const Text('Open floating window'),
           ),
           ElevatedButton(
-            onPressed: mainApi.closeFloatingWindow,
+            onPressed: mainApi.closeAndroidWindow,
             child: const Text('Close floating window'),
           ),
           ElevatedButton(

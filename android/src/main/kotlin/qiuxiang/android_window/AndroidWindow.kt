@@ -10,7 +10,7 @@ import io.flutter.embedding.android.FlutterView
 import io.flutter.embedding.engine.FlutterEngine
 import kotlin.math.roundToInt
 
-class FloatingWindow(
+class AndroidWindow(
   val service: Service,
   width: Int,
   height: Int,
@@ -43,8 +43,8 @@ class FloatingWindow(
   )
 
   fun open() {
-    val floatingApi = FloatingApi(this)
-    Pigeon.FloatingApi.setup(engine.dartExecutor.binaryMessenger, floatingApi)
+    val floatingApi = AndroidWindowApi(this)
+    Pigeon.AndroidWindowApi.setup(engine.dartExecutor.binaryMessenger, floatingApi)
     layoutParams.gravity = Gravity.START or Gravity.TOP
     layoutParams.x = x
     layoutParams.y = y

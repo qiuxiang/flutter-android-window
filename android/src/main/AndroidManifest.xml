@@ -3,6 +3,6 @@
 
   <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
   <application>
-    <service android:name=".FloatingService" />
+    <service android:name=".WindowService" />
   </application>
 </manifest>

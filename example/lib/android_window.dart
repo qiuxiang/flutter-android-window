@@ -4,8 +4,8 @@ import 'package:flutter/rendering.dart';
 
 import 'package:android_window/android_window.dart';
 
-class FloatingApp extends StatelessWidget {
-  const FloatingApp({Key? key}) : super(key: key);
+class AndroidWindowApp extends StatelessWidget {
+  const AndroidWindowApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

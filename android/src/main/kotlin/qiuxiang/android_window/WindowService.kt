@@ -5,9 +5,9 @@ import android.os.IBinder
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.embedding.engine.dart.DartExecutor
 
-class FloatingService : android.app.Service() {
+class WindowService : android.app.Service() {
   private lateinit var engine: FlutterEngine
-  private lateinit var floatingWindow: FloatingWindow
+  private lateinit var androidWindow: AndroidWindow
   private var running = false
 
   override fun onBind(intent: Intent): IBinder? {
@@ -23,21 +23,21 @@ class FloatingService : android.app.Service() {
           "floating"
         )
       )
-      (application as AndroidWindowApplication).floatingEngine = engine
+      (application as AndroidWindowApplication).engine = engine
 
       val width = intent.getIntExtra("width", 400)
       val height = intent.getIntExtra("height", 600)
       val x = intent.getIntExtra("x", 0)
       val y = intent.getIntExtra("y", 0)
-      floatingWindow = FloatingWindow(this, width, height, x, y, engine)
-      floatingWindow.open()
+      androidWindow = AndroidWindow(this, width, height, x, y, engine)
+      androidWindow.open()
       running = true
     }
     return super.onStartCommand(intent, flags, startId)
   }
 
   override fun onDestroy() {
-    floatingWindow.close()
+    androidWindow.close()
     engine.destroy()
   }
 }

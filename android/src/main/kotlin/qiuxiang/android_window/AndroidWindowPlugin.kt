@@ -14,7 +14,7 @@ class AndroidWindowPlugin : FlutterPlugin, ActivityAware {
   override fun onDetachedFromActivity() {}
 
   override fun onAttachedToEngine(binding: FlutterPluginBinding) {
-    this.pluginBinding = binding
+    pluginBinding = binding
   }
 
   override fun onAttachedToActivity(binding: ActivityPluginBinding) {

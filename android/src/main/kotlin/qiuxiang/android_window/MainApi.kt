@@ -9,12 +9,13 @@ import android.provider.Settings
 class MainApi(private val activity: Activity) : Pigeon.MainApi {
   private var onActivityResultCallback: (() -> Unit)? = null
 
-  override fun openAndroidWindow(width: Long?, height: Long?, x: Long?, y: Long?) {
+  override fun openAndroidWindow(entry: String, width: Long, height: Long, x: Long, y: Long) {
     val intent = Intent(activity, WindowService::class.java)
-    intent.putExtra("width", width?.toInt())
-    intent.putExtra("height", height?.toInt())
-    intent.putExtra("x", x?.toInt())
-    intent.putExtra("y", y?.toInt())
+    intent.putExtra("entry", entry)
+    intent.putExtra("width", width.toInt())
+    intent.putExtra("height", height.toInt())
+    intent.putExtra("x", x.toInt())
+    intent.putExtra("y", y.toInt())
     if (canDrawOverlays()) {
       activity.startService(intent)
     } else {

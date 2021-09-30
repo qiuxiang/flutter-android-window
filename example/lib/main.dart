@@ -8,6 +8,6 @@ void main() {
 }
 
 @pragma('vm:entry-point')
-void floating() {
+void androidWindow() {
   runApp(const AndroidWindowApp());
 }

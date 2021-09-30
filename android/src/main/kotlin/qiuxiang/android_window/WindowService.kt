@@ -17,13 +17,10 @@ class WindowService : android.app.Service() {
   override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
     if (!running) {
       engine = FlutterEngine(application)
-      engine.dartExecutor.executeDartEntrypoint(
-        DartExecutor.DartEntrypoint(
-          findAppBundlePath(),
-          "floating"
-        )
-      )
       (application as AndroidWindowApplication).engine = engine
+      val entry = intent.getStringExtra("entry") ?: "androidWindow"
+      val entryPoint = DartExecutor.DartEntrypoint(findAppBundlePath(), entry)
+      engine.dartExecutor.executeDartEntrypoint(entryPoint)
 
       val width = intent.getIntExtra("width", 400)
       val height = intent.getIntExtra("height", 600)

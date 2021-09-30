@@ -8,7 +8,7 @@ abstract class MainApi {
   void requestOverlayDisplayPermission();
   @async
   void send(String name, Map data);
-  void openAndroidWindow(int width, int height, int x, int y);
+  void openAndroidWindow(String entry, int width, int height, int x, int y);
   void closeAndroidWindow();
 }
 

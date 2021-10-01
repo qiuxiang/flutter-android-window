@@ -17,7 +17,7 @@ final _api = MainApi();
 // }
 /// ```
 void open({
-  String entryPoint = "androidWindow",
+  String entryPoint = 'androidWindow',
   Size size = const Size(400, 600),
   Offset position = const Offset(0, 0),
 }) {

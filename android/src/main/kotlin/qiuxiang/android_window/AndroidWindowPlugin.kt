@@ -6,7 +6,7 @@ import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
 
 class AndroidWindowPlugin : FlutterPlugin, ActivityAware {
-  lateinit var pluginBinding: FlutterPluginBinding
+  private lateinit var pluginBinding: FlutterPluginBinding
 
   override fun onDetachedFromEngine(binding: FlutterPluginBinding) {}
   override fun onDetachedFromActivityForConfigChanges() {}
@@ -19,7 +19,10 @@ class AndroidWindowPlugin : FlutterPlugin, ActivityAware {
 
   override fun onAttachedToActivity(binding: ActivityPluginBinding) {
     val mainApi = MainApi(binding.activity)
-    binding.activity.app?.mainApi = mainApi
     Pigeon.MainApi.setup(pluginBinding.binaryMessenger, mainApi)
+    binding.activity.app?.let {
+      it.mainApi = mainApi
+      it.mainBinaryMessenger = pluginBinding.binaryMessenger
+    }
   }
 }

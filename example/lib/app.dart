@@ -1,4 +1,4 @@
-import 'package:android_window/android_window.dart';
+import 'package:android_window/main.dart' as window;
 import 'package:flutter/material.dart';
 
 class App extends StatelessWidget {
@@ -15,55 +15,69 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // mainApi.openFloatingWindow(400, 600, 200, 200);
+    window.setHandler((name, data) async {
+      switch (name) {
+        case 'hello':
+          showSnackBar(context, 'message from android window: $data');
+          return 'hello android window';
+      }
+    });
     return Scaffold(
       body: SafeArea(
         child: ListView(padding: const EdgeInsets.all(16), children: [
           ElevatedButton(
             onPressed: () async {
-              snackBar(
-                context: context,
-                title: '${await mainApi.canDrawOverlays()}',
-              );
+              showSnackBar(context, '${await window.canDrawOverlays()}');
             },
             child: const Text('Check can draw overlays'),
           ),
-          ElevatedButton(
-            onPressed: mainApi.requestOverlayDisplayPermission,
-            child: const Text('Request overlay display permission'),
+          const ElevatedButton(
+            onPressed: window.requestPermission,
+            child: Text('Request overlay display permission'),
           ),
           ElevatedButton(
-            onPressed: () => mainApi.openAndroidWindow(400, 600, 200, 200),
-            child: const Text('Open floating window'),
+            onPressed: () => window.open(
+              size: const Size(600, 800),
+              position: const Offset(200, 200),
+            ),
+            child: const Text('Open android window'),
+          ),
+          const ElevatedButton(
+            onPressed: window.close,
+            child: Text('Close android window'),
           ),
           ElevatedButton(
-            onPressed: mainApi.closeAndroidWindow,
-            child: const Text('Close floating window'),
+            onPressed: () => window.resize(600, 400),
+            child: const Text('resize(600, 400)'),
           ),
           ElevatedButton(
-            onPressed: () =>
-                mainApi.send('layout', {'width': 600, 'height': 400}),
-            child: const Text('setLayout(600, 400)'),
+            onPressed: () => window.resize(400, 600),
+            child: const Text('resize(400, 600)'),
           ),
           ElevatedButton(
-            onPressed: () =>
-                mainApi.send('layout', {'width': 400, 'height': 600}),
-            child: const Text('setLayout(400, 600)'),
-          ),
-          ElevatedButton(
-            onPressed: () => mainApi.send('position', {'x': 0, 'y': 0}),
+            onPressed: () => window.setPosition(0, 0),
             child: const Text('setPosition(0, 0)'),
           ),
           ElevatedButton(
-            onPressed: () => mainApi.send('position', {'x': 200, 'y': 200}),
-            child: const Text('setPosition(100, 100)'),
+            onPressed: () => window.setPosition(300, 300),
+            child: const Text('setPosition(300, 300)'),
+          ),
+          ElevatedButton(
+            onPressed: () async {
+              final response = await window.post(
+                'hello',
+                'hello android window',
+              );
+              showSnackBar(context, 'response from android window: $response');
+            },
+            child: const Text('Send message to android window'),
           ),
         ]),
       ),
     );
   }
 
-  snackBar({required BuildContext context, required String title}) {
+  showSnackBar(BuildContext context, String title) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(title)));
   }
 }

@@ -106,3 +106,8 @@ class AndroidWindow(
     windowManager.updateViewLayout(rootView, layoutParams)
   }
 }
+
+val AndroidWindow.app: AndroidWindowApplication?
+  get() {
+    return service.application as? AndroidWindowApplication
+  }

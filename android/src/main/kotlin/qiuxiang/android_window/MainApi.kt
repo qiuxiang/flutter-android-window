@@ -9,7 +9,7 @@ import android.provider.Settings
 class MainApi(private val activity: Activity) : Pigeon.MainApi {
   private var onActivityResultCallback: (() -> Unit)? = null
 
-  override fun openAndroidWindow(entry: String, width: Long, height: Long, x: Long, y: Long) {
+  override fun open(entry: String, width: Long, height: Long, x: Long, y: Long) {
     val intent = Intent(activity, WindowService::class.java)
     intent.putExtra("entry", entry)
     intent.putExtra("width", width.toInt())
@@ -19,7 +19,7 @@ class MainApi(private val activity: Activity) : Pigeon.MainApi {
     if (canDrawOverlays()) {
       activity.startService(intent)
     } else {
-      requestOverlayDisplayPermission {
+      requestPermission {
         if (canDrawOverlays()) {
           activity.startService(intent)
         }
@@ -27,7 +27,7 @@ class MainApi(private val activity: Activity) : Pigeon.MainApi {
     }
   }
 
-  override fun closeAndroidWindow() {
+  override fun close() {
     activity.stopService(Intent(activity, WindowService::class.java))
   }
 
@@ -35,13 +35,13 @@ class MainApi(private val activity: Activity) : Pigeon.MainApi {
     result.success(canDrawOverlays())
   }
 
-  override fun requestOverlayDisplayPermission(result: Pigeon.Result<Void>) {
-    requestOverlayDisplayPermission { result.success(null) }
+  override fun requestPermission(result: Pigeon.Result<Void>) {
+    requestPermission { result.success(null) }
   }
 
-  override fun send(name: String?, data: MutableMap<Any, Any>?, result: Pigeon.Result<Void>?) {
-    (activity.application as? AndroidWindowApplication)?.engine?.dartExecutor?.binaryMessenger?.let {
-      Pigeon.AndroidWindowHandler(it).handler(name, data) { result?.success(null) }
+  override fun post(data: MutableMap<Any, Any>?, result: Pigeon.Result<MutableMap<Any, Any>>?) {
+    activity.app?.androidWindowBinaryMessenger?.let {
+      Pigeon.AndroidWindowHandler(it).handler(data) { response -> result?.success(response) }
     }
   }
 
@@ -53,7 +53,7 @@ class MainApi(private val activity: Activity) : Pigeon.MainApi {
     }
   }
 
-  private fun requestOverlayDisplayPermission(callback: () -> Unit) {
+  private fun requestPermission(callback: () -> Unit) {
     onActivityResultCallback = callback
     if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
       val intent = Intent(

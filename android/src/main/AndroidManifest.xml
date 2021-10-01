@@ -2,6 +2,7 @@
   package="qiuxiang.android_window">
 
   <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+  <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
   <application>
     <service android:name=".WindowService" />
   </application>

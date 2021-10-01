@@ -5,16 +5,18 @@ abstract class MainApi {
   @async
   bool canDrawOverlays();
   @async
-  void requestOverlayDisplayPermission();
+  void requestPermission();
   @async
-  void send(String name, Map data);
-  void openAndroidWindow(String entry, int width, int height, int x, int y);
-  void closeAndroidWindow();
+  Map post(Map message);
+  void open(String entry, int width, int height, int x, int y);
+  void close();
 }
 
 @HostApi()
 abstract class AndroidWindowApi {
-  void setLayout(int width, int height);
+  @async
+  Map post(Map message);
+  void resize(int width, int height);
   void setPosition(int x, int y);
   void dragStart();
   void dragEnd();
@@ -23,10 +25,12 @@ abstract class AndroidWindowApi {
 
 @FlutterApi()
 abstract class AndroidWindowHandler {
-  void handler(String name, Map data);
+  @async
+  Map handler(Map message);
 }
 
 @FlutterApi()
 abstract class MainHandler {
-  void handler(String name, Map data);
+  @async
+  Map handler(Map message);
 }

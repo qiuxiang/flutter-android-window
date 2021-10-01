@@ -1,5 +1,5 @@
 name: android_window
-description: A flutter plugin used to create android floating window
+description: A flutter plugin allows you to create native android floating window.
 version: 0.0.0
 homepage: https://github.com/qiuxiang/flutter-android-window
 

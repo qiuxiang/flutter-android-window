@@ -1,8 +1,79 @@
-# android_window
+# android_window [![pub-badge]][pub]
 
-A new flutter plugin project.
+A flutter plugin allows you to create native android floating window.
 
+## Usage
+
+main.dart:
+
+```dart
+import 'package:android_window/main.dart' as window;
+import 'android_window.dart';
+
+@pragma('vm:entry-point')
+void androidWindow() {
+  runApp(const AndroidWindowApp());
+}
+
+// run in main app
+window.open(
+  entryPoint: 'androidWindow',
+  size: const Size(600, 800),
+  position: const Offset(200, 200),
+);
 ```
-mkdir android/src/main/java/qiuxiang/android_window -p
-flutter pub run pigeon --input lib/pigeon.dart --dart_out lib/pigeon.g.dart --java_out android/src/main/java/qiuxiang/android_window/Pigeon.java --java_package "qiuxiang.android_window"
+
+android_window.dart:
+
+```dart
+class AndroidWindowApp extends StatelessWidget {
+  const AndroidWindowApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      home: HomePage(),
+      debugShowCheckedModeBanner: false,
+    );
+  }
+}
+
+class HomePage extends StatelessWidget {
+  const HomePage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return AndroidWindow(
+      child: Scaffold(
+        backgroundColor: Colors.grey.withOpacity(0.8),
+        body: const Center(child: Text('Hello android window')),
+      ),
+    );
+  }
+}
 ```
+
+MainActivity.kt:
+
+```kotlin
+import qiuxiang.android_window.AndroidWindowActivity
+class MainActivity : AndroidWindowActivity()
+```
+
+Create MainApplication.kt:
+
+```kotlin
+import qiuxiang.android_window.AndroidWindowApplication
+class MainApplication : AndroidWindowApplication()
+```
+
+Add `android:name=".MainApplication"` to AndroidManifest.xml:
+
+```xml
+<application android:name=".MainApplication">
+```
+
+[Full example](https://github.com/qiuxiang/flutter-android-window/tree/main/example)
+
+[pub]: https://pub.dartlang.org/packages/android_window
+[pub-badge]: https://img.shields.io/pub/v/android_window.svg

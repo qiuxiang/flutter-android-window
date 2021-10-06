@@ -7,20 +7,12 @@ export 'pigeon.g.dart' show AndroidWindowHandler;
 final _api = AndroidWindowApi();
 
 /// Android window widget.
-///
-///
-class AndroidWindow extends StatelessWidget {
+class AndroidWindow extends StatefulWidget {
   final Widget child;
   const AndroidWindow({required this.child, Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onPanStart: (event) => _api.dragStart(),
-      onPanEnd: (event) => _api.dragEnd(),
-      child: child,
-    );
-  }
+  State<AndroidWindow> createState() => _AndroidWindowState();
 
   /// Resize android window.
   static void resize(int width, int height) {
@@ -50,6 +42,25 @@ class AndroidWindow extends StatelessWidget {
     Future<Object?> Function(String name, Object? data) handler,
   ) {
     AndroidWindowHandler.setup(_Handler(handler));
+  }
+}
+
+class _AndroidWindowState extends State<AndroidWindow> {
+  bool start = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onPanStart: (event) => start = true,
+      onPanUpdate: (event) {
+        if (start) {
+          _api.dragStart();
+          start = false;
+        }
+      },
+      onPanEnd: (event) => _api.dragEnd(),
+      child: widget.child,
+    );
   }
 }
 

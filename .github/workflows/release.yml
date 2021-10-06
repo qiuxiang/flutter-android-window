@@ -25,6 +25,7 @@ jobs:
           mkdir android/src/main/java/qiuxiang/android_window -p
           flutter pub get
           flutter pub run pigeon --input lib/pigeon.dart --dart_out lib/pigeon.g.dart --java_out android/src/main/java/qiuxiang/android_window/Pigeon.java --java_package "qiuxiang.android_window"
+          flutter format lib
           cd example
           flutter build apk --target-platform android-arm64
       - name: Publish

@@ -2,6 +2,11 @@
 
 A flutter plugin allows you to create native android floating window.
 
+[](https://user-images.githubusercontent.com/1709072/136141607-86b51ce1-d0d7-4142-8fc5-20adcfa93d65.mp4)
+
+- [Full example](https://github.com/qiuxiang/flutter-android-window/tree/main/example)
+- [example.apk](https://github.com/qiuxiang/flutter-android-window/releases/download/latest/example.apk)
+
 ## Usage
 
 main.dart:
@@ -72,8 +77,6 @@ Add `android:name=".MainApplication"` to AndroidManifest.xml:
 ```xml
 <application android:name=".MainApplication">
 ```
-
-[Full example](https://github.com/qiuxiang/flutter-android-window/tree/main/example)
 
 [pub]: https://pub.dartlang.org/packages/android_window
 [pub-badge]: https://img.shields.io/pub/v/android_window.svg

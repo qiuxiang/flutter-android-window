@@ -2,10 +2,11 @@
 
 A flutter plugin allows you to create native android floating window.
 
-[](https://user-images.githubusercontent.com/1709072/136141607-86b51ce1-d0d7-4142-8fc5-20adcfa93d65.mp4)
+[](https://user-images.githubusercontent.com/1709072/136388895-4b576f60-f00e-4188-ae74-dd4a3da9beca.mp4)
 
 - [Full example](https://github.com/qiuxiang/flutter-android-window/tree/main/example)
 - [example.apk](https://github.com/qiuxiang/flutter-android-window/releases/download/latest/example.apk)
+
 
 ## Usage
 

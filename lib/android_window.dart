@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'pigeon.g.dart';
 
-export 'pigeon.g.dart' show AndroidWindowHandler;
-
 final _api = AndroidWindowApi();
 
 /// Android window widget.

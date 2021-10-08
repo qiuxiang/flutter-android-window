@@ -11,10 +11,10 @@ final _api = MainApi();
 /// For example:
 ///
 /// ```dart
-// @pragma('vm:entry-point')
-// void androidWindow() {
-//   runApp(const AndroidWindowApp());
-// }
+/// @pragma('vm:entry-point')
+/// void androidWindow() {
+///   runApp(const AndroidWindowApp());
+/// }
 /// ```
 void open({
   String entryPoint = 'androidWindow',

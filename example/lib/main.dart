@@ -1,4 +1,4 @@
-import 'package:android_window/main.dart' as window;
+import 'package:android_window/main.dart' as android_window;
 import 'package:flutter/material.dart';
 
 import 'android_window.dart';
@@ -26,7 +26,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    window.setHandler((name, data) async {
+    android_window.setHandler((name, data) async {
       switch (name) {
         case 'hello':
           showSnackBar(context, 'message from android window: $data');
@@ -38,44 +38,45 @@ class HomePage extends StatelessWidget {
         child: ListView(padding: const EdgeInsets.all(16), children: [
           ElevatedButton(
             onPressed: () async {
-              showSnackBar(context, '${await window.canDrawOverlays()}');
+              showSnackBar(
+                  context, '${await android_window.canDrawOverlays()}');
             },
             child: const Text('Check can draw overlays'),
           ),
           const ElevatedButton(
-            onPressed: window.requestPermission,
+            onPressed: android_window.requestPermission,
             child: Text('Request overlay display permission'),
           ),
           ElevatedButton(
-            onPressed: () => window.open(
+            onPressed: () => android_window.open(
               size: const Size(600, 800),
               position: const Offset(200, 200),
             ),
             child: const Text('Open android window'),
           ),
           const ElevatedButton(
-            onPressed: window.close,
+            onPressed: android_window.close,
             child: Text('Close android window'),
           ),
           ElevatedButton(
-            onPressed: () => window.resize(600, 400),
+            onPressed: () => android_window.resize(600, 400),
             child: const Text('resize(600, 400)'),
           ),
           ElevatedButton(
-            onPressed: () => window.resize(400, 600),
+            onPressed: () => android_window.resize(400, 600),
             child: const Text('resize(400, 600)'),
           ),
           ElevatedButton(
-            onPressed: () => window.setPosition(0, 0),
+            onPressed: () => android_window.setPosition(0, 0),
             child: const Text('setPosition(0, 0)'),
           ),
           ElevatedButton(
-            onPressed: () => window.setPosition(300, 300),
+            onPressed: () => android_window.setPosition(300, 300),
             child: const Text('setPosition(300, 300)'),
           ),
           ElevatedButton(
             onPressed: () async {
-              final response = await window.post(
+              final response = await android_window.post(
                 'hello',
                 'hello android window',
               );

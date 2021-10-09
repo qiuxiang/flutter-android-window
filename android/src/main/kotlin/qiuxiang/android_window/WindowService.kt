@@ -22,7 +22,7 @@ class WindowService : android.app.Service() {
   override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
     if (!running) {
       engine = FlutterEngine(application)
-      (application as AndroidWindowApplication).androidWindowBinaryMessenger = engine.dartExecutor.binaryMessenger
+      (application as AndroidWindowApplication).androidWindowMessenger = engine.dartExecutor.binaryMessenger
       val entry = intent.getStringExtra("entry") ?: "androidWindow"
       val entryPoint = DartExecutor.DartEntrypoint(findAppBundlePath(), entry)
       engine.dartExecutor.executeDartEntrypoint(entryPoint)

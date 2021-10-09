@@ -4,8 +4,8 @@ import io.flutter.app.FlutterApplication
 import io.flutter.plugin.common.BinaryMessenger
 
 open class AndroidWindowApplication : FlutterApplication() {
-  var mainBinaryMessenger: BinaryMessenger? = null
-  var androidWindowBinaryMessenger: BinaryMessenger? = null
+  var mainMessenger: BinaryMessenger? = null
+  var androidWindowMessenger: BinaryMessenger? = null
   var mainApi: MainApi? = null
 }
 

@@ -22,7 +22,7 @@ class AndroidWindowPlugin : FlutterPlugin, ActivityAware {
     Pigeon.MainApi.setup(pluginBinding.binaryMessenger, mainApi)
     binding.activity.app?.let {
       it.mainApi = mainApi
-      it.mainBinaryMessenger = pluginBinding.binaryMessenger
+      it.mainMessenger = pluginBinding.binaryMessenger
     }
   }
 }

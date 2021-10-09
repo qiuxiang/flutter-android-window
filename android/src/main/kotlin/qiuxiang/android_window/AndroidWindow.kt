@@ -3,11 +3,14 @@ package qiuxiang.android_window
 import android.annotation.SuppressLint
 import android.app.Service
 import android.graphics.PixelFormat
+import android.util.DisplayMetrics
 import android.view.*
 import android.widget.LinearLayout
 import io.flutter.embedding.android.FlutterSurfaceView
 import io.flutter.embedding.android.FlutterView
 import io.flutter.embedding.engine.FlutterEngine
+import kotlin.math.max
+import kotlin.math.min
 import kotlin.math.roundToInt
 
 class AndroidWindow(
@@ -26,6 +29,7 @@ class AndroidWindow(
   private lateinit var flutterView: FlutterView
   private var windowManager = service.getSystemService(Service.WINDOW_SERVICE) as WindowManager
   private val inflater = service.getSystemService(Service.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+  private val metrics = DisplayMetrics()
 
   @SuppressLint("InflateParams")
   private var rootView = inflater.inflate(R.layout.floating, null) as ViewGroup
@@ -49,6 +53,8 @@ class AndroidWindow(
     layoutParams.x = x
     layoutParams.y = y
     windowManager.addView(rootView, layoutParams)
+    @Suppress("Deprecation")
+    windowManager.defaultDisplay.getMetrics(metrics)
     flutterView = FlutterView(inflater.context, FlutterSurfaceView(inflater.context, true))
     flutterView.attachToFlutterEngine(engine)
     @Suppress("ClickableViewAccessibility")
@@ -56,9 +62,10 @@ class AndroidWindow(
       when (event.action) {
         MotionEvent.ACTION_MOVE -> {
           if (dragging) {
-            layoutParams.x = initialX + (event.rawX - startX).roundToInt()
-            layoutParams.y = initialY + (event.rawY - startY).roundToInt()
-            windowManager.updateViewLayout(rootView, layoutParams)
+            setPosition(
+              initialX + (event.rawX - startX).roundToInt(),
+              initialY + (event.rawY - startY).roundToInt()
+            )
           } else {
             startX = event.rawX
             startY = event.rawY
@@ -101,8 +108,8 @@ class AndroidWindow(
   }
 
   fun setPosition(x: Int, y: Int) {
-    layoutParams.x = x
-    layoutParams.y = y
+    layoutParams.x = min(max(0, x), metrics.widthPixels - layoutParams.width)
+    layoutParams.y = min(max(0, y), metrics.heightPixels - layoutParams.height)
     windowManager.updateViewLayout(rootView, layoutParams)
   }
 }

@@ -40,7 +40,7 @@ class MainApi(private val activity: Activity) : Pigeon.MainApi {
   }
 
   override fun post(data: MutableMap<Any, Any>?, result: Pigeon.Result<MutableMap<Any, Any>>?) {
-    activity.app?.androidWindowBinaryMessenger?.let {
+    activity.app?.androidWindowMessenger?.let {
       Pigeon.AndroidWindowHandler(it).handler(data) { response -> result?.success(response) }
     }
   }

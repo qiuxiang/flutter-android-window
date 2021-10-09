@@ -22,7 +22,7 @@ class AndroidWindowApi(private val window: AndroidWindow) : Pigeon.AndroidWindow
   }
 
   override fun post(data: MutableMap<Any, Any>?, result: Pigeon.Result<MutableMap<Any, Any>>?) {
-    window.app?.mainBinaryMessenger?.let {
+    window.app?.mainMessenger?.let {
       Pigeon.MainHandler(it).handler(data) { response -> result?.success(response) }
     }
   }

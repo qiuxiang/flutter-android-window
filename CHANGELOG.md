@@ -1,3 +1,7 @@
+## 0.0.5
+
+Fix window position update.
+
 ## 0.0.4
 
 Update readme.

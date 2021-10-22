@@ -8,4 +8,9 @@ open class AndroidWindowActivity : FlutterActivity() {
     super.onActivityResult(requestCode, resultCode, data)
     app?.mainApi?.onActivityResult()
   }
+
+  override fun onStart() {
+    super.onStart()
+    app?.activity = this
+  }
 }

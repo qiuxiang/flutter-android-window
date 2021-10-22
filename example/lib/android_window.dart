@@ -34,12 +34,15 @@ class HomePage extends StatelessWidget {
         borderRadius: const BorderRadius.all(Radius.circular(8)),
         child: Scaffold(
           backgroundColor: Colors.grey.withOpacity(0.8),
-          body: Stack(children: [
-            ListView(children: [
-              Ink(
-                height: 400 / 3,
-                color: Colors.lightGreen,
-                child: InkWell(onTap: () async {
+          body: ListView(
+            padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
+            children: [
+              const ElevatedButton(
+                onPressed: AndroidWindow.close,
+                child: Text('Close'),
+              ),
+              ElevatedButton(
+                onPressed: () async {
                   final response = await AndroidWindow.post(
                     'hello',
                     'hello main app',
@@ -48,25 +51,15 @@ class HomePage extends StatelessWidget {
                     context,
                     'response from main app: $response',
                   );
-                }),
+                },
+                child: const Text('Send message'),
               ),
-              Container(height: 400 / 3, color: Colors.blueGrey),
-              Container(height: 400 / 3, color: Colors.lightGreen),
-              Container(height: 400 / 3, color: Colors.blueGrey),
-            ]),
-            const Positioned(
-              right: 0,
-              child: Material(
-                color: Colors.transparent,
-                borderRadius: BorderRadius.all(Radius.circular(24)),
-                clipBehavior: Clip.hardEdge,
-                child: IconButton(
-                  onPressed: AndroidWindow.close,
-                  icon: Icon(Icons.close, color: Colors.white),
-                ),
+              const ElevatedButton(
+                onPressed: AndroidWindow.launchApp,
+                child: Text('Launch app'),
               ),
-            ),
-          ]),
+            ],
+          ),
         ),
       ),
     );

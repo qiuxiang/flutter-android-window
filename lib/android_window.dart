@@ -33,6 +33,11 @@ class AndroidWindow extends StatefulWidget {
     _api.close();
   }
 
+  /// Launch main app.
+  static void launchApp() {
+    _api.launchApp();
+  }
+
   /// Set message handler.
   ///
   /// Receive message from main app.

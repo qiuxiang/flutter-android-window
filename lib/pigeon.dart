@@ -1,5 +1,12 @@
 import 'package:pigeon/pigeon.dart';
 
+@ConfigurePigeon(
+  PigeonOptions(
+    dartOut: 'lib/pigeon.g.dart',
+    javaOut: 'android/src/main/java/qiuxiang/android_window/Pigeon.java',
+    javaOptions: JavaOptions(package: 'qiuxiang.android_window'),
+  ),
+)
 @HostApi()
 abstract class MainApi {
   @async
@@ -21,6 +28,7 @@ abstract class AndroidWindowApi {
   void dragStart();
   void dragEnd();
   void close();
+  void launchApp();
 }
 
 @FlutterApi()

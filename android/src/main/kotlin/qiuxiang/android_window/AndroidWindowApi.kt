@@ -1,5 +1,7 @@
 package qiuxiang.android_window
 
+import android.content.Intent
+
 class AndroidWindowApi(private val window: AndroidWindow) : Pigeon.AndroidWindowApi {
   override fun resize(width: Long, height: Long) {
     window.setLayout(width.toInt(), height.toInt())
@@ -19,6 +21,14 @@ class AndroidWindowApi(private val window: AndroidWindow) : Pigeon.AndroidWindow
 
   override fun close() {
     window.service.stopSelf()
+  }
+
+  override fun launchApp() {
+    window.app?.activity?.let {
+      val intent = Intent(window.service, it.javaClass)
+      intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+      window.service.startActivity(intent)
+    }
   }
 
   override fun post(data: MutableMap<Any, Any>?, result: Pigeon.Result<MutableMap<Any, Any>>?) {

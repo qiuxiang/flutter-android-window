@@ -49,7 +49,7 @@ class HomePage extends StatelessWidget {
           ),
           ElevatedButton(
             onPressed: () => android_window.open(
-              size: const Size(600, 800),
+              size: const Size(600, 600),
               position: const Offset(200, 200),
             ),
             child: const Text('Open android window'),

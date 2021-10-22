@@ -123,3 +123,10 @@ Screenshot:
 
 [pub]: https://pub.dartlang.org/packages/android_window
 [pub-badge]: https://img.shields.io/pub/v/android_window.svg
+
+## Build
+
+```
+mkdir -p android/src/main/java/qiuxiang/android_window
+flutter pub run pigeon --input lib/pigeon.dart
+```

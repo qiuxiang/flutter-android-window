@@ -22,9 +22,9 @@ jobs:
           export version=$(echo ${{ steps.release.outputs.tag_name }} | sed s/v//)
           sed -i -r "s/version: .*/version: $version/" pubspec.yaml
           sed -i "1s/^/## $version\n\n${{ steps.release.outputs.body }}\n\n/" CHANGELOG.md
-          mkdir android/src/main/java/qiuxiang/android_window -p
+          mkdir -p android/src/main/java/qiuxiang/android_window
           flutter pub get
-          flutter pub run pigeon --input lib/pigeon.dart --dart_out lib/pigeon.g.dart --java_out android/src/main/java/qiuxiang/android_window/Pigeon.java --java_package "qiuxiang.android_window"
+          flutter pub run pigeon --input lib/pigeon.dart
           flutter format lib
           cd example
           flutter build apk --target-platform android-arm64

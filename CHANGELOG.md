@@ -1,3 +1,7 @@
+## 0.0.6
+
+Fix onActivityResult bug.
+
 ## 0.0.5
 
 Fix window position update.

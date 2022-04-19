@@ -25,7 +25,8 @@ class AndroidWindow extends StatefulWidget {
   /// Send message to window.
   static Future<Object?> post(String name, [Object? data]) async {
     final response = await _api.post({'name': name, 'data': data});
-    if (response.isNotEmpty) return response['data'];
+    if (response.isEmpty) return null;
+    return response['data'];
   }
 
   /// Close android window.

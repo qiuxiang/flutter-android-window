@@ -32,6 +32,7 @@ class HomePage extends StatelessWidget {
           showSnackBar(context, 'message from android window: $data');
           return 'hello android window';
       }
+      return null;
     });
     return Scaffold(
       body: SafeArea(

@@ -50,7 +50,8 @@ Future<void> requestPermission() {
 /// Send message to window.
 Future<Object?> post(String name, [Object? data]) async {
   final response = await _api.post({'name': name, 'data': data});
-  if (response.isNotEmpty) return response['data'];
+  if (response.isEmpty) return null;
+  return response['data'];
 }
 
 /// Resize window.

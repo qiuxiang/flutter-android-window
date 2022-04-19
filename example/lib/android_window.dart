@@ -1,7 +1,5 @@
 import 'package:android_window/android_window.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 
 class AndroidWindowApp extends StatelessWidget {
   const AndroidWindowApp({Key? key}) : super(key: key);
@@ -27,6 +25,7 @@ class HomePage extends StatelessWidget {
           showSnackBar(context, 'message from main app: $data');
           return 'hello main app';
       }
+      return null;
     });
     return AndroidWindow(
       child: ClipRRect(

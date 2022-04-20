@@ -52,6 +52,7 @@ class HomePage extends StatelessWidget {
             onPressed: () => android_window.open(
               size: const Size(600, 600),
               position: const Offset(200, 200),
+              focusable: true,
             ),
             child: const Text('Open android window'),
           ),

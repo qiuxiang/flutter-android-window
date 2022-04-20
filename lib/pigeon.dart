@@ -15,7 +15,7 @@ abstract class MainApi {
   void requestPermission();
   @async
   Map post(Map message);
-  void open(String entry, int width, int height, int x, int y);
+  void open(String entry, int width, int height, int x, int y, bool focusable);
   void close();
 }
 

@@ -9,13 +9,14 @@ import android.provider.Settings
 class MainApi(private val activity: Activity) : Pigeon.MainApi {
   private var onActivityResultCallback: (() -> Unit)? = null
 
-  override fun open(entry: String, width: Long, height: Long, x: Long, y: Long) {
+  override fun open(entry: String, width: Long, height: Long, x: Long, y: Long, focusable: Boolean) {
     val intent = Intent(activity, WindowService::class.java)
     intent.putExtra("entry", entry)
     intent.putExtra("width", width.toInt())
     intent.putExtra("height", height.toInt())
     intent.putExtra("x", x.toInt())
     intent.putExtra("y", y.toInt())
+    intent.putExtra("focusable", focusable)
     if (canDrawOverlays()) {
       activity.startService(intent)
     } else {

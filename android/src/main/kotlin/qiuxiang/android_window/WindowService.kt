@@ -27,11 +27,12 @@ class WindowService : android.app.Service() {
       val entryPoint = DartExecutor.DartEntrypoint(findAppBundlePath(), entry)
       engine.dartExecutor.executeDartEntrypoint(entryPoint)
 
+      val focusable = intent.getBooleanExtra("focusable", false)
       val width = intent.getIntExtra("width", 400)
       val height = intent.getIntExtra("height", 600)
       val x = intent.getIntExtra("x", 0)
       val y = intent.getIntExtra("y", 0)
-      androidWindow = AndroidWindow(this, width, height, x, y, engine)
+      androidWindow = AndroidWindow(this, focusable, width, height, x, y, engine)
       androidWindow.open()
       startForeground(1, getNotification())
       running = true

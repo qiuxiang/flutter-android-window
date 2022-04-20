@@ -33,31 +33,35 @@ class HomePage extends StatelessWidget {
         borderRadius: const BorderRadius.all(Radius.circular(8)),
         child: Scaffold(
           backgroundColor: Colors.grey.withOpacity(0.8),
-          body: ListView(
-            padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
-            children: [
-              const ElevatedButton(
-                onPressed: AndroidWindow.close,
-                child: Text('Close'),
-              ),
-              ElevatedButton(
-                onPressed: () async {
-                  final response = await AndroidWindow.post(
-                    'hello',
-                    'hello main app',
-                  );
-                  showSnackBar(
-                    context,
-                    'response from main app: $response',
-                  );
-                },
-                child: const Text('Send message'),
-              ),
-              const ElevatedButton(
-                onPressed: AndroidWindow.launchApp,
-                child: Text('Launch app'),
-              ),
-            ],
+          body: Padding(
+            padding: const EdgeInsets.all(8),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const TextField(),
+                const ElevatedButton(
+                  onPressed: AndroidWindow.close,
+                  child: Text('Close'),
+                ),
+                ElevatedButton(
+                  onPressed: () async {
+                    final response = await AndroidWindow.post(
+                      'hello',
+                      'hello main app',
+                    );
+                    showSnackBar(
+                      context,
+                      'response from main app: $response',
+                    );
+                  },
+                  child: const Text('Send message'),
+                ),
+                const ElevatedButton(
+                  onPressed: AndroidWindow.launchApp,
+                  child: Text('Launch app'),
+                ),
+              ],
+            ),
           ),
         ),
       ),

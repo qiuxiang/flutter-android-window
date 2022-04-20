@@ -15,6 +15,7 @@ import kotlin.math.roundToInt
 
 class AndroidWindow(
   val service: Service,
+  focusable: Boolean,
   width: Int,
   height: Int,
   private val x: Int,
@@ -42,7 +43,7 @@ class AndroidWindow(
       @Suppress("Deprecation")
       WindowManager.LayoutParams.TYPE_TOAST
     },
-    WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+    if (focusable) 0 else WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
     PixelFormat.TRANSLUCENT
   )
 
@@ -72,7 +73,21 @@ class AndroidWindow(
             initialX = layoutParams.x
             initialY = layoutParams.y
           }
-          false
+        }
+        MotionEvent.ACTION_DOWN -> {
+          layoutParams.flags = layoutParams.flags and WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE.inv()
+          windowManager.updateViewLayout(rootView, layoutParams)
+        }
+      }
+      false
+    }
+    @Suppress("ClickableViewAccessibility")
+    rootView.setOnTouchListener { _, event ->
+      when (event.action) {
+        MotionEvent.ACTION_DOWN -> {
+          layoutParams.flags = layoutParams.flags or WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+          windowManager.updateViewLayout(rootView, layoutParams)
+          true
         }
         else -> false
       }

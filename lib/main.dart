@@ -20,6 +20,7 @@ void open({
   String entryPoint = 'androidWindow',
   Size size = const Size(400, 600),
   Offset position = const Offset(0, 0),
+  bool focusable = false,
 }) {
   _api.open(
     entryPoint,
@@ -27,6 +28,7 @@ void open({
     size.height.toInt(),
     position.dx.toInt(),
     position.dy.toInt(),
+    focusable,
   );
 }
 

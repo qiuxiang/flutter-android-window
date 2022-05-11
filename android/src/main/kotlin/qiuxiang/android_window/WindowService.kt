@@ -4,6 +4,7 @@ import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Build
 import android.os.IBinder
 import io.flutter.embedding.engine.FlutterEngine
@@ -17,6 +18,11 @@ class WindowService : android.app.Service() {
 
   override fun onBind(intent: Intent): IBinder? {
     return null
+  }
+
+  override fun onConfigurationChanged(newConfig: Configuration) {
+    super.onConfigurationChanged(newConfig)
+    androidWindow.updateLayout()
   }
 
   override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {

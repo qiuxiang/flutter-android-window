@@ -48,6 +48,7 @@ class AndroidWindow(
   )
 
   fun open() {
+    engine.platformViewsController.attach(inflater.context, engine.renderer, engine.dartExecutor)
     val floatingApi = AndroidWindowApi(this)
     Pigeon.AndroidWindowApi.setup(engine.dartExecutor.binaryMessenger, floatingApi)
     layoutParams.gravity = Gravity.START or Gravity.TOP

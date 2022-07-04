@@ -1,3 +1,3 @@
-package qiuxiang.android_window_example
+package com.example.example
 
 class MainActivity : qiuxiang.android_window.AndroidWindowActivity()

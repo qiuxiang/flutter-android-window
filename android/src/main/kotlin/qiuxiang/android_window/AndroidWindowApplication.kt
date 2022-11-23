@@ -9,5 +9,6 @@ open class AndroidWindowApplication : FlutterApplication() {
   var androidWindowMessenger: BinaryMessenger? = null
   var mainApi: MainApi? = null
   var activity: Activity? = null
+  var running = false
 }
 

@@ -42,6 +42,7 @@ class WindowService : android.app.Service() {
       androidWindow.open()
       startForeground(1, getNotification())
       running = true
+      (application as AndroidWindowApplication).running = true
     }
     return super.onStartCommand(intent, flags, startId)
   }
@@ -61,5 +62,6 @@ class WindowService : android.app.Service() {
   override fun onDestroy() {
     androidWindow.close()
     engine.destroy()
+    (application as AndroidWindowApplication).running = false
   }
 }

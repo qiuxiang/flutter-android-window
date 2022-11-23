@@ -42,6 +42,11 @@ Future<bool> canDrawOverlays() {
   return _api.canDrawOverlays();
 }
 
+/// Checks if the window is running.
+Future<bool> isRunning() {
+  return _api.isRunning();
+}
+
 /// Request overlay permission.
 ///
 /// Show screen for controlling which apps can draw on top of other apps.

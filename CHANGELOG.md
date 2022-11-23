@@ -1,3 +1,11 @@
+## 0.2.0
+
+Add PlatformViews support.
+
+## 0.1.0
+
+Add AndroidWindow.launchApp().
+
 ## 0.0.6
 
 Fix onActivityResult bug.

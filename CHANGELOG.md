@@ -1,3 +1,15 @@
+## 0.3.1
+
+Fix types error
+
+## 0.3.1
+
+Fix focusable bug
+
+## 0.3.0
+
+Add isRunning()
+
 ## 0.2.0
 
 Add PlatformViews support.

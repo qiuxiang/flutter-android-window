@@ -57,10 +57,11 @@ class _AndroidWindowState extends State<AndroidWindow> {
   Widget build(BuildContext context) {
     return RawGestureDetector(
       gestures: {
-        PanGestureRecognizer: GestureRecognizerFactoryWithHandlers(
+        PanGestureRecognizer:
+            GestureRecognizerFactoryWithHandlers<PanGestureRecognizer>(
           () => PanGestureRecognizer(),
           (instance) {
-            (instance as PanGestureRecognizer)
+            instance
               ..onStart = (event) {
                 start = true;
               }

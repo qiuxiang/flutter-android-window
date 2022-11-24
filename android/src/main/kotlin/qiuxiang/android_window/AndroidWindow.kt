@@ -15,7 +15,7 @@ import kotlin.math.roundToInt
 
 class AndroidWindow(
   val service: Service,
-  focusable: Boolean,
+  private val focusable: Boolean,
   width: Int,
   height: Int,
   private val x: Int,
@@ -76,8 +76,10 @@ class AndroidWindow(
           }
         }
         MotionEvent.ACTION_DOWN -> {
-          layoutParams.flags = layoutParams.flags and WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE.inv()
-          windowManager.updateViewLayout(rootView, layoutParams)
+          if (focusable) {
+            layoutParams.flags = layoutParams.flags and WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE.inv()
+            windowManager.updateViewLayout(rootView, layoutParams)
+          }
         }
       }
       false

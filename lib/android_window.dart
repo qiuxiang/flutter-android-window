@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import 'pigeon.g.dart';
@@ -54,15 +55,27 @@ class _AndroidWindowState extends State<AndroidWindow> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onPanStart: (event) => start = true,
-      onPanUpdate: (event) {
-        if (start) {
-          _api.dragStart();
-          start = false;
-        }
+    return RawGestureDetector(
+      gestures: {
+        PanGestureRecognizer: GestureRecognizerFactoryWithHandlers(
+          () => PanGestureRecognizer(),
+          (instance) {
+            (instance as PanGestureRecognizer)
+              ..onStart = (event) {
+                start = true;
+              }
+              ..onUpdate = (event) {
+                if (start) {
+                  _api.dragStart();
+                  start = false;
+                }
+              }
+              ..onEnd = (event) {
+                _api.dragEnd();
+              };
+          },
+        ),
       },
-      onPanEnd: (event) => _api.dragEnd(),
       child: widget.child,
     );
   }

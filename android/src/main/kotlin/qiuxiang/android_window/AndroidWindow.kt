@@ -75,6 +75,7 @@ class AndroidWindow(
             initialY = layoutParams.y
           }
         }
+
         MotionEvent.ACTION_DOWN -> {
           if (focusable) {
             layoutParams.flags = layoutParams.flags and WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE.inv()
@@ -92,6 +93,7 @@ class AndroidWindow(
           windowManager.updateViewLayout(rootView, layoutParams)
           true
         }
+
         else -> false
       }
     }

@@ -28,7 +28,6 @@ class WindowService : android.app.Service() {
   override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
     if (!running) {
       engine = FlutterEngine(application)
-      (application as AndroidWindowApplication).androidWindowMessenger = engine.dartExecutor.binaryMessenger
       val entry = intent.getStringExtra("entry") ?: "androidWindow"
       val entryPoint = DartExecutor.DartEntrypoint(findAppBundlePath(), entry)
       engine.dartExecutor.executeDartEntrypoint(entryPoint)
@@ -42,7 +41,8 @@ class WindowService : android.app.Service() {
       androidWindow.open()
       startForeground(1, getNotification())
       running = true
-      (application as AndroidWindowApplication).running = true
+      androidWindow.app?.androidWindowMessenger = engine.dartExecutor.binaryMessenger
+      androidWindow.app?.running = true
     }
     return super.onStartCommand(intent, flags, startId)
   }
@@ -62,6 +62,6 @@ class WindowService : android.app.Service() {
   override fun onDestroy() {
     androidWindow.close()
     engine.destroy()
-    (application as AndroidWindowApplication).running = false
+    androidWindow.app?.running = false
   }
 }

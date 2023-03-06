@@ -61,7 +61,10 @@ class WindowService : android.app.Service() {
 
   override fun onDestroy() {
     androidWindow.close()
-    engine.destroy()
+    try {
+      engine.destroy()
+    } catch (_: Exception) {
+    }
     androidWindow.app?.running = false
   }
 }

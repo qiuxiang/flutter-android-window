@@ -17,7 +17,12 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(title: 'Flutter Demo', home: HomePage());
+    return MaterialApp(
+      title: 'Flutter Demo',
+      home: const HomePage(),
+      theme: ThemeData(useMaterial3: true),
+      darkTheme: ThemeData.dark(useMaterial3: true),
+    );
   }
 }
 
@@ -50,9 +55,8 @@ class HomePage extends StatelessWidget {
           ),
           ElevatedButton(
             onPressed: () => android_window.open(
-              size: const Size(600, 600),
+              size: const Size(400, 400),
               position: const Offset(200, 200),
-              focusable: true,
             ),
             child: const Text('Open android window'),
           ),

@@ -1,0 +1,3 @@
+```
+flutter create . --platforms android
+```

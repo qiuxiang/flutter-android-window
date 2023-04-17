@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.provider.Settings
+import io.flutter.embedding.engine.FlutterEngineCache
 
 class MainApi(private val activity: Activity) : Pigeon.MainApi {
   private var onActivityResultCallback: (() -> Unit)? = null
@@ -41,11 +42,11 @@ class MainApi(private val activity: Activity) : Pigeon.MainApi {
   }
 
   override fun isRunning(result: Pigeon.Result<Boolean>) {
-    result.success((activity.application as AndroidWindowApplication).running)
+    result.success(FlutterEngineCache.getInstance().get(engineId) != null)
   }
 
   override fun post(data: MutableMap<Any, Any>?, result: Pigeon.Result<MutableMap<Any, Any>>?) {
-    activity.app?.androidWindowMessenger?.let {
+    FlutterEngineCache.getInstance().get(engineId)?.dartExecutor?.binaryMessenger?.let {
       Pigeon.AndroidWindowHandler(it).handler(data) { response -> result?.success(response) }
     }
   }
@@ -62,8 +63,7 @@ class MainApi(private val activity: Activity) : Pigeon.MainApi {
     onActivityResultCallback = callback
     if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
       val intent = Intent(
-        Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-        Uri.parse("package:${activity.packageName}")
+        Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:${activity.packageName}")
       )
       activity.startActivityForResult(intent, Activity.RESULT_FIRST_USER)
     }

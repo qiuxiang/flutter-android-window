@@ -24,15 +24,13 @@ class AndroidWindowApi(private val window: AndroidWindow) : Pigeon.AndroidWindow
   }
 
   override fun launchApp() {
-    window.app?.activity?.let {
-      val intent = Intent(window.service, it.javaClass)
-      intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-      window.service.startActivity(intent)
-    }
+    val intent = Intent(window.service, AndroidWindowPlugin.activityClass)
+    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+    window.service.startActivity(intent)
   }
 
   override fun post(data: MutableMap<Any, Any>?, result: Pigeon.Result<MutableMap<Any, Any>>?) {
-    window.app?.mainMessenger?.let {
+    AndroidWindowPlugin.messenger?.let {
       Pigeon.MainHandler(it).handler(data) { response -> result?.success(response) }
     }
   }

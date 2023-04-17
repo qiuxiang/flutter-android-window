@@ -35,16 +35,11 @@ class AndroidWindow(
   @SuppressLint("InflateParams")
   private var rootView = inflater.inflate(R.layout.floating, null) as ViewGroup
   private val layoutParams = WindowManager.LayoutParams(
-    width,
-    height,
-    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+    width, height, if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
       WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
     } else {
-      @Suppress("Deprecation")
-      WindowManager.LayoutParams.TYPE_TOAST
-    },
-    if (focusable) 0 else WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
-    PixelFormat.TRANSLUCENT
+      @Suppress("Deprecation") WindowManager.LayoutParams.TYPE_TOAST
+    }, if (focusable) 0 else WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE, PixelFormat.TRANSLUCENT
   )
 
   fun open() {
@@ -55,18 +50,15 @@ class AndroidWindow(
     layoutParams.x = x
     layoutParams.y = y
     windowManager.addView(rootView, layoutParams)
-    @Suppress("Deprecation")
-    windowManager.defaultDisplay.getMetrics(metrics)
+    @Suppress("Deprecation") windowManager.defaultDisplay.getMetrics(metrics)
     flutterView = FlutterView(inflater.context, FlutterSurfaceView(inflater.context, true))
     flutterView.attachToFlutterEngine(engine)
-    @Suppress("ClickableViewAccessibility")
-    flutterView.setOnTouchListener { _, event ->
+    @Suppress("ClickableViewAccessibility") flutterView.setOnTouchListener { _, event ->
       when (event.action) {
         MotionEvent.ACTION_MOVE -> {
           if (dragging) {
             setPosition(
-              initialX + (event.rawX - startX).roundToInt(),
-              initialY + (event.rawY - startY).roundToInt()
+              initialX + (event.rawX - startX).roundToInt(), initialY + (event.rawY - startY).roundToInt()
             )
           } else {
             startX = event.rawX
@@ -85,8 +77,7 @@ class AndroidWindow(
       }
       false
     }
-    @Suppress("ClickableViewAccessibility")
-    rootView.setOnTouchListener { _, event ->
+    @Suppress("ClickableViewAccessibility") rootView.setOnTouchListener { _, event ->
       when (event.action) {
         MotionEvent.ACTION_DOWN -> {
           layoutParams.flags = layoutParams.flags or WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
@@ -98,12 +89,9 @@ class AndroidWindow(
       }
     }
     engine.lifecycleChannel.appIsResumed()
-    rootView.findViewById<LinearLayout>(R.id.floating_window)
-      .addView(
-        flutterView,
-        ViewGroup.LayoutParams(
-          ViewGroup.LayoutParams.MATCH_PARENT,
-          ViewGroup.LayoutParams.MATCH_PARENT
+    rootView.findViewById<LinearLayout>(R.id.floating_window).addView(
+        flutterView, ViewGroup.LayoutParams(
+          ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
         )
       )
   }
@@ -122,8 +110,7 @@ class AndroidWindow(
   }
 
   fun updateLayout() {
-    @Suppress("Deprecation")
-    windowManager.defaultDisplay.getMetrics(metrics)
+    @Suppress("Deprecation") windowManager.defaultDisplay.getMetrics(metrics)
     setPosition(layoutParams.x, layoutParams.y)
   }
 
@@ -139,8 +126,3 @@ class AndroidWindow(
     windowManager.updateViewLayout(rootView, layoutParams)
   }
 }
-
-val AndroidWindow.app: AndroidWindowApplication?
-  get() {
-    return service.application as? AndroidWindowApplication
-  }

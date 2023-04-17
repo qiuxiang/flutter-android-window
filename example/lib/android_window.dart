@@ -6,9 +6,10 @@ class AndroidWindowApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       title: 'Flutter Demo',
-      home: HomePage(),
+      home: const HomePage(),
+      theme: ThemeData.dark(useMaterial3: true),
       debugShowCheckedModeBanner: false,
     );
   }
@@ -32,36 +33,34 @@ class HomePage extends StatelessWidget {
         clipBehavior: Clip.hardEdge,
         borderRadius: const BorderRadius.all(Radius.circular(8)),
         child: Scaffold(
-          backgroundColor: Colors.grey.withOpacity(0.8),
-          body: Padding(
+          backgroundColor:
+              Theme.of(context).scaffoldBackgroundColor.withOpacity(0.8),
+          body: ListView(
+            physics: const NeverScrollableScrollPhysics(),
             padding: const EdgeInsets.all(8),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const TextField(),
-                const ElevatedButton(
-                  onPressed: AndroidWindow.close,
-                  child: Text('Close'),
-                ),
-                ElevatedButton(
-                  onPressed: () async {
-                    final response = await AndroidWindow.post(
-                      'hello',
-                      'hello main app',
-                    );
-                    showSnackBar(
-                      context,
-                      'response from main app: $response',
-                    );
-                  },
-                  child: const Text('Send message'),
-                ),
-                const ElevatedButton(
-                  onPressed: AndroidWindow.launchApp,
-                  child: Text('Launch app'),
-                ),
-              ],
-            ),
+            children: [
+              const ElevatedButton(
+                onPressed: AndroidWindow.close,
+                child: Text('Close'),
+              ),
+              ElevatedButton(
+                onPressed: () async {
+                  final response = await AndroidWindow.post(
+                    'hello',
+                    'hello main app',
+                  );
+                  showSnackBar(
+                    context,
+                    'response from main app: $response',
+                  );
+                },
+                child: const Text('Send message'),
+              ),
+              const ElevatedButton(
+                onPressed: AndroidWindow.launchApp,
+                child: Text('Launch app'),
+              ),
+            ],
           ),
         ),
       ),

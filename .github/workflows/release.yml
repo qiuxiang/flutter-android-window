@@ -1,41 +1,36 @@
 name: release
 on:
-  release:
-    types: [published]
+  push:
+    tags: ["v[0-9]+.[0-9]+.[0-9]+*"]
 jobs:
   release:
+    permissions:
+      contents: write
+      id-token: write
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-java@v1
+      - uses: actions/checkout@v3
         with:
-          java-version: 12
-      - uses: subosito/flutter-action@v1
+          fetch-depth: 0
+      - uses: actions/setup-java@v3
+        with:
+          java-version: 11
+          distribution: temurin
+      - uses: subosito/flutter-action@v2
         with:
           channel: stable
-      - uses: bruceadams/get-release@v1.2.3
-        id: release
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
       - name: Build
         run: |
-          export version=$(echo ${{ steps.release.outputs.tag_name }} | sed s/v//)
-          sed -i -r "s/version: .*/version: $version/" pubspec.yaml
-          mkdir -p android/src/main/java/qiuxiang/android_window
-          flutter pub get
-          flutter pub run pigeon --input lib/pigeon.dart
-          flutter format lib
           cd example
-          flutter build apk --target-platform android-arm64
-      - name: Publish
-        run: |
-          echo '${{ secrets.CREDENTIALS_JSON }}' > $(which flutter | sed -r 's/bin\/flutter/.pub-cache\/credentials.json/')
-          flutter pub publish -f
-      - uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
+          flutter create . --platforms android
+          flutter build apk --split-per-abi
+      - uses: softprops/action-gh-release@v1
         with:
-          upload_url: ${{ steps.release.outputs.upload_url }}
-          asset_path: ./example/build/app/outputs/flutter-apk/app-release.apk
-          asset_name: example.apk
-          asset_content_type: application/vnd.android.package-archive
+          files: example/build/app/outputs/flutter-apk/app-*-release.apk
+      - name: Update
+        run: |
+          export version=$(echo ${{ github.ref_name }} | sed s/v//)
+          sed -i -r "s/version: .*/version: $version/" pubspec.yaml
+          git tag --format=$'## %(refname:short)\n%(subject)\n' --sort=-v:refname > CHANGELOG.md
+      - uses: dart-lang/setup-dart@v1
+      - run: dart pub publish -f

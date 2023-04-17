@@ -21,8 +21,10 @@ jobs:
           channel: stable
       - name: Build
         run: |
+          mkdir -p android/src/main/java/qiuxiang/android_window
+          flutter pub get
+          flutter pub run pigeon --input lib/pigeon.dart
           cd example
-          flutter create . --platforms android
           flutter build apk --split-per-abi
       - uses: softprops/action-gh-release@v1
         with:

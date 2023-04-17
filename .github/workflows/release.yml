@@ -25,6 +25,7 @@ jobs:
           flutter pub get
           flutter pub run pigeon --input lib/pigeon.dart
           cd example
+          flutter create . --platforms android
           flutter build apk --split-per-abi
       - uses: softprops/action-gh-release@v1
         with:

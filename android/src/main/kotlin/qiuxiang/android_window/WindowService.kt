@@ -29,7 +29,9 @@ class WindowService : android.app.Service() {
     androidWindow.updateLayout()
   }
 
-  override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
+  override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+    if(intent == null) return super.onStartCommand()
+    
     if (!running) {
       engine = FlutterEngine(application)
       FlutterEngineCache.getInstance().put(engineId, engine)

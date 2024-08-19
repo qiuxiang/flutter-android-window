@@ -46,7 +46,7 @@ class AndroidWindow extends StatefulWidget {
   static void setHandler(
     Future<Object?> Function(String name, Object? data) handler,
   ) {
-    AndroidWindowHandler.setup(_Handler(handler));
+    AndroidWindowHandler.setUp(_Handler(handler));
   }
 }
 

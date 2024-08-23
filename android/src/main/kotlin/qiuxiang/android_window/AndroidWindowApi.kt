@@ -11,6 +11,12 @@ class AndroidWindowApi(private val window: AndroidWindow) : Pigeon.AndroidWindow
     window.setPosition(x.toInt(), y.toInt())
   }
 
+  override fun post(message: MutableMap<Any, Any>, result: Pigeon.Result<MutableMap<Any, Any>>) {
+    AndroidWindowPlugin.messenger?.let {
+      Pigeon.MainHandler(it).handler(message, result)
+    }
+  }
+
   override fun dragStart() {
     window.dragStart()
   }
@@ -27,11 +33,5 @@ class AndroidWindowApi(private val window: AndroidWindow) : Pigeon.AndroidWindow
     val intent = Intent(window.service, AndroidWindowPlugin.activityClass)
     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
     window.service.startActivity(intent)
-  }
-
-  override fun post(data: MutableMap<Any, Any>?, result: Pigeon.Result<MutableMap<Any, Any>>?) {
-    AndroidWindowPlugin.messenger?.let {
-      Pigeon.MainHandler(it).handler(data) { response -> result?.success(response) }
-    }
   }
 }

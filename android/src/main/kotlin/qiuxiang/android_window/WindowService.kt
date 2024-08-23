@@ -30,7 +30,7 @@ class WindowService : android.app.Service() {
   }
 
   override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-    if(intent == null) return super.onStartCommand()
+    if(intent == null) return super.onStartCommand(null, flags, startId)
     
     if (!running) {
       engine = FlutterEngine(application)

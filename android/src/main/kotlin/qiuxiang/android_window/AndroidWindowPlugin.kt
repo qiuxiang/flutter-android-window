@@ -26,7 +26,7 @@ class AndroidWindowPlugin : FlutterPlugin, ActivityAware {
 
   override fun onAttachedToActivity(binding: ActivityPluginBinding) {
     val mainApi = MainApi(binding.activity)
-    Pigeon.MainApi.setup(pluginBinding.binaryMessenger, mainApi)
+    Pigeon.MainApi.setUp(pluginBinding.binaryMessenger, mainApi)
     messenger = pluginBinding.binaryMessenger
     activityClass = binding.activity.javaClass
   }

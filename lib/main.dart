@@ -75,7 +75,7 @@ Future<void> setPosition(int x, int y) {
 ///
 /// Receive message from android window.
 void setHandler(Future<Object?> Function(String name, Object? data) handler) {
-  MainHandler.setup(_Handler(handler));
+  MainHandler.setUp(_Handler(handler));
 }
 
 class _Handler extends MainHandler {

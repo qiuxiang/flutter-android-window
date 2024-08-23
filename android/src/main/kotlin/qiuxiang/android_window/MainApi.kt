@@ -37,17 +37,17 @@ class MainApi(private val activity: Activity) : Pigeon.MainApi {
     result.success(canDrawOverlays())
   }
 
-  override fun requestPermission(result: Pigeon.Result<Void>) {
-    requestPermission { result.success(null) }
+  override fun requestPermission(result: Pigeon.VoidResult) {
+    requestPermission { result.success() }
   }
 
   override fun isRunning(result: Pigeon.Result<Boolean>) {
     result.success(FlutterEngineCache.getInstance().get(engineId) != null)
   }
 
-  override fun post(data: MutableMap<Any, Any>?, result: Pigeon.Result<MutableMap<Any, Any>>?) {
+  override fun post(message: MutableMap<Any, Any>, result: Pigeon.Result<MutableMap<Any, Any>>) {
     FlutterEngineCache.getInstance().get(engineId)?.dartExecutor?.binaryMessenger?.let {
-      Pigeon.AndroidWindowHandler(it).handler(data) { response -> result?.success(response) }
+      Pigeon.AndroidWindowHandler(it).handler(message,result)
     }
   }
 

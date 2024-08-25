@@ -4,6 +4,7 @@ import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Intent
+import android.content.pm.ServiceInfo
 import android.content.res.Configuration
 import android.os.Build
 import android.os.IBinder
@@ -47,7 +48,12 @@ class WindowService : android.app.Service() {
       val y = intent.getIntExtra("y", 0)
       androidWindow = AndroidWindow(this, focusable, width, height, x, y, engine)
       androidWindow.open()
-      startForeground(1, getNotification())
+      val notification = getNotification()
+      if (Build.VERSION.SDK_INT > Build.VERSION_CODES.P) {
+        startForeground(1, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE)
+      } else {
+        startForeground(1, notification)
+      }
       running = true
     }
     return super.onStartCommand(intent, flags, startId)
